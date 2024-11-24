@@ -1,0 +1,44 @@
+[gd_scene load_steps=9 format=3 uid="uid://ilenhd1s3ho"]
+
+[ext_resource type="Texture2D" uid="uid://0rcml3n5wg3s" path="res://icon.svg" id="1_rckht"]
+[ext_resource type="Script" path="res://actor.gd" id="2_ybxhk"]
+[ext_resource type="Texture2D" uid="uid://b5fr54xj28m3u" path="res://pigeon.svg" id="3_rvkki"]
+[ext_resource type="Script" path="res://pigeon_area.gd" id="4_28ygk"]
+[ext_resource type="Script" path="res://pigeon_collision_area.gd" id="4_ypd3n"]
+[ext_resource type="Script" path="res://collision_shape_2d.gd" id="6_oh432"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_71ak1"]
+resource_local_to_scene = true
+size = Vector2(244, 354)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hl27u"]
+size = Vector2(132, 129)
+
+[node name="controls-test" type="Node2D"]
+
+[node name="pigeon-area" type="Area2D" parent="."]
+position = Vector2(772, 320)
+script = ExtResource("4_28ygk")
+
+[node name="pigeon" type="Sprite2D" parent="pigeon-area"]
+texture = ExtResource("3_rvkki")
+
+[node name="pigeon-collision-area" type="CollisionShape2D" parent="pigeon-area"]
+position = Vector2(-10, 4)
+shape = SubResource("RectangleShape2D_71ak1")
+script = ExtResource("4_ypd3n")
+
+[node name="actor-area" type="Area2D" parent="."]
+
+[node name="actor" type="Sprite2D" parent="actor-area"]
+position = Vector2(332, 290)
+texture = ExtResource("1_rckht")
+script = ExtResource("2_ybxhk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="actor-area"]
+position = Vector2(333, 288)
+shape = SubResource("RectangleShape2D_hl27u")
+script = ExtResource("6_oh432")
+
+[connection signal="area_entered" from="pigeon-area" to="actor-area/actor" method="_on_pigeonarea_area_entered"]
+[connection signal="area_entered" from="actor-area" to="pigeon-area/pigeon-collision-area" method="_on_actorarea_area_entered"]
