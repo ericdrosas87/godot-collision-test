@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://ilenhd1s3ho"]
+[gd_scene load_steps=10 format=3 uid="uid://ilenhd1s3ho"]
 
 [ext_resource type="Texture2D" uid="uid://0rcml3n5wg3s" path="res://icon.svg" id="1_rckht"]
 [ext_resource type="Script" path="res://actor.gd" id="2_ybxhk"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://pigeon_area.gd" id="4_28ygk"]
 [ext_resource type="Script" path="res://pigeon_collision_area.gd" id="4_ypd3n"]
 [ext_resource type="Script" path="res://collision_shape_2d.gd" id="6_oh432"]
+[ext_resource type="Script" path="res://window.gd" id="7_hsav7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_71ak1"]
 resource_local_to_scene = true
@@ -40,5 +41,22 @@ position = Vector2(333, 288)
 shape = SubResource("RectangleShape2D_hl27u")
 script = ExtResource("6_oh432")
 
+[node name="window" type="Window" parent="."]
+initial_position = 1
+script = ExtResource("7_hsav7")
+
+[node name="pop" type="Popup" parent="window"]
+initial_position = 1
+
+[node name="PopupMenu" type="PopupMenu" parent="window/pop"]
+initial_position = 1
+item_count = 2
+item_0/text = "I'm a friend!"
+item_0/checkable = 2
+item_1/text = "I'm an enemy!"
+item_1/checkable = 2
+item_1/id = 1
+
 [connection signal="area_entered" from="pigeon-area" to="actor-area/actor" method="_on_pigeonarea_area_entered"]
 [connection signal="area_entered" from="actor-area" to="pigeon-area/pigeon-collision-area" method="_on_actorarea_area_entered"]
+[connection signal="close_requested" from="window" to="window" method="_on_close_requested"]
